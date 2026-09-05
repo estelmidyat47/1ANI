@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>1 ANI - Ana Sayfa</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #f5f7ff, #eef1f8);
+        color: #1a1a1a;
+        min-height: 100vh;
+    }
+
+    header {
+        background: rgba(17, 17, 17, 0.96);
+        color: white;
+        padding: 18px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .logo span {
+        color: #aaa;
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .menu a,
+    .menu button {
+        color: white;
+        text-decoration: none;
+        background: #292929;
+        border: 1px solid #444;
+        padding: 11px 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .menu a:hover,
+    .menu button:hover {
+        background: #444;
+        transform: translateY(-1px);
+    }
+
+    .admin-button {
+        background: linear-gradient(135deg, #6d4aff, #4b2cff) !important;
+        border-color: #7658ff !important;
+        font-weight: bold;
+    }
+
+    .admin-button:hover {
+        background: linear-gradient(135deg, #7c5cff, #5a38ff) !important;
+    }
+
+    .logout {
+        background: #8f1025 !important;
+        border-color: #a51b32 !important;
+    }
+
+    .logout:hover {
+        background: #b71935 !important;
+    }
+
+    main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 20px;
+    }
+
+    .welcome {
+        text-align: center;
+        margin-bottom: 40px;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .welcome-badge {
+        display: inline-block;
+        background: white;
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 18px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .admin-badge {
+        background: linear-gradient(135deg, #eee9ff, #f7f4ff);
+        color: #5a35d6;
+        font-weight: bold;
+        border: 1px solid #ddd3ff;
+    }
+
+    .welcome h1 {
+        font-size: 42px;
+        margin: 0 0 12px;
+    }
+
+    .welcome p {
+        color: #777;
+        font-size: 17px;
+        margin: 0;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.94);
+        padding: 32px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        animation: fadeUp 0.5s ease;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: #111;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .card h2 {
+        margin: 0;
+        font-size: 22px;
+    }
+
+    .card-description {
+        color: #777;
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        margin-top: 18px;
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid #ddd;
+        border-radius: 11px;
+        font-size: 15px;
+        outline: none;
+        background: #fafafa;
+        transition: 0.2s;
+        font-family: Arial, sans-serif;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #222;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    }
+
+    textarea {
+        min-height: 170px;
+        resize: vertical;
+    }
+
+    .button {
+        display: inline-block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        background: #111;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 11px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .button:hover {
+        background: #333;
+        transform: translateY(-1px);
+    }
+
+    #message {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        min-height: 20px;
+    }
+
+    .discover-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .discover-text {
+        flex: 1;
+    }
+
+    .discover-text h2 {
+        margin-bottom: 8px;
+    }
+
+    .discover-text p {
+        color: #777;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .discover-button {
+        width: auto;
+        min-width: 190px;
+        margin-top: 0;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 650px) {
+
+        header {
+            padding: 15px 18px;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .menu {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .menu a,
+        .menu button {
+            text-align: center;
+            padding: 10px 8px;
+        }
+
+        .logout {
+            grid-column: 1 / -1;
+        }
+
+        main {
+            padding: 35px 15px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+        }
+
+        .welcome p {
+            font-size: 15px;
+        }
+
+        .card {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .discover-card {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .discover-button {
+            width: 100%;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<div class="logo">
+    1 <span>ANI</span>
+</div>
+
+<nav class="menu">
+
+    <a href="/profile.html">
+        👤 Profilim
+    </a>
+
+    <a href="/memories.html">
+        🌎 Keşfet
+    </a>
+
+    <a
+        href="/founder.html"
+        id="adminButton"
+        class="admin-button"
+        style="display: none;"
+    >
+        👑 Admin
+    </a>
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        🚪 Çıkış Yap
+    </button>
+
+</nav>
+```
+
+</header>
+
+<main>
+
+```
+<div class="welcome">
+
+    <div
+        class="welcome-badge"
+        id="welcomeBadge"
+    >
+        ✨ Anılarını ölümsüzleştir
+    </div>
+
+    <h1 id="welcomeTitle">
+        Hoş geldin!
+    </h1>
+
+    <p>
+        Anılarını paylaş, başkalarının hikâyelerini keşfet.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+
+        <div class="card-icon">
+            📝
+        </div>
+
+        <div>
+            <h2>
+                Yeni Bir Anı Paylaş
+            </h2>
+
+            <div class="card-description">
+                Senin için önemli olan bir anıyı paylaş.
+            </div>
+        </div>
+
+    </div>
+
+
+    <label for="title">
+        Anının Başlığı
+    </label>
+
+    <input
+        type="text"
+        id="title"
+        placeholder="Örneğin: Çocukluğumun en güzel günü"
+        maxlength="150"
+    >
+
+
+    <label for="content">
+        Anın
+    </label>
+
+    <textarea
+        id="content"
+        placeholder="Anını buraya yaz..."
+        maxlength="5000"
+    ></textarea>
+
+
+    <button
+        class="button"
+        onclick="shareMemory()"
+    >
+        ✨ Anımı Paylaş
+    </button>
+
+
+    <p id="message"></p>
+
+</div>
+
+
+<div class="card discover-card">
+
+    <div class="discover-text">
+
+        <h2>
+            🌎 Anıları Keşfet
+        </h2>
+
+        <p>
+            Diğer insanların paylaştığı güzel,
+            komik ve unutulmaz anıları keşfet.
+        </p>
+
+    </div>
+
+
+    <a
+        href="/memories.html"
+        class="button discover-button"
+    >
+        Anıları Keşfet →
+    </a>
+
+</div>
+```
+
+</main>
+
+<script>
+
+// ========================================
+// KULLANICI BİLGİSİ
+// ========================================
+
+fetch("/api/me")
+
+.then(response => {
+
+    if (!response.ok) {
+        window.location.href = "/login.html";
+        return;
+    }
+
+    return response.json();
+
+})
+
+.then(user => {
+
+    if (!user) {
+        return;
+    }
+
+    const displayName =
+        user.isFounder
+            ? "👑 Admin"
+            : user.username;
+
+    document.getElementById("welcomeTitle").textContent =
+        `Hoş geldin, ${displayName}!`;
+
+    if (user.isFounder) {
+
+        const adminButton =
+            document.getElementById("adminButton");
+
+        adminButton.style.display = "inline-block";
+
+        const badge =
+            document.getElementById("welcomeBadge");
+
+        badge.textContent =
+            "👑 Kurucu / Admin";
+
+        badge.classList.add("admin-badge");
+    }
+
+})
+
+.catch(() => {
+
+    window.location.href = "/login.html";
+
+});
+
+
+// ========================================
+// ANI PAYLAŞ
+// ========================================
+
+function shareMemory() {
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const content =
+        document.getElementById("content").value.trim();
+
+    const message =
+        document.getElementById("message");
+
+
+    if (!title || !content) {
+
+        message.textContent =
+            "⚠️ Lütfen başlık ve anını doldur.";
+
+        message.style.color = "#b00020";
+
+        return;
+    }
+
+
+    const button =
+        document.querySelector(".card .button");
+
+    button.disabled = true;
+    button.textContent = "Paylaşılıyor...";
+
+
+    fetch("/api/memories", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            title: title,
+            content: content
+        })
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (!data.success) {
+
+            message.textContent =
+                data.error ||
+                "Anı paylaşılırken bir hata oluştu.";
+
+            message.style.color = "#b00020";
+
+            return;
+        }
+
+
+        message.textContent =
+            "✅ Anın başarıyla paylaşıldı!";
+
+        message.style.color = "green";
+
+
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        message.textContent =
+            "❌ Bir hata oluştu.";
+
+        message.style.color = "#b00020";
+
+    })
+
+    .finally(() => {
+
+        button.disabled = false;
+        button.textContent = "✨ Anımı Paylaş";
+
+    });
+
+}
+
+
+// ========================================
+// ÇIKIŞ YAP
+// ========================================
+
+function logout() {
+
+    fetch("/logout", {
+        method: "POST"
+    })
+
+    .then(() => {
+
+        window.location.href =
+            "/login.html";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Çıkış yapılırken bir hata oluştu."
+        );
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

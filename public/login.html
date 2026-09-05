@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Giriş Yap - 1 ANI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at top left, #ffffff 0%, transparent 35%),
+                linear-gradient(135deg, #f5f7ff, #e9ecf5);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            padding: 40px;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            animation: showBox 0.5s ease;
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 36px;
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: #777;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            text-align: center;
+
+            font-size: 25px;
+
+            margin-bottom: 28px;
+
+            color: #151515;
+        }
+
+        .input-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            background: #fafafa;
+
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #222;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-button {
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 5px;
+
+            background: #111;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-button:hover {
+            background: #333;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 25px 0;
+
+            color: #aaa;
+
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            height: 1px;
+
+            background: #e5e5e5;
+
+            flex: 1;
+        }
+
+        .register-text {
+            text-align: center;
+
+            font-size: 14px;
+
+            color: #777;
+        }
+
+        .register-text a {
+            color: #111;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            margin-left: 4px;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #999;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back:hover {
+            color: #222;
+        }
+
+        @keyframes showBox {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .login-box {
+                padding: 30px 22px;
+
+                border-radius: 20px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="logo">
+            1 <span>ANI</span>
+        </div>
+
+        <div class="subtitle">
+            Anılarına yeniden kavuş
+        </div>
+
+        <h1>
+            Giriş Yap
+        </h1>
+
+
+        <form action="/login" method="POST">
+
+            <div class="input-group">
+
+                <label for="username">
+                    Kullanıcı Adı
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Kullanıcı adınız"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="password">
+                    Şifre
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Şifreniz"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Giriş Yap →
+            </button>
+
+        </form>
+
+
+        <div class="divider">
+            veya
+        </div>
+
+
+        <div class="register-text">
+
+            Hesabın yok mu?
+
+            <a href="/register.html">
+                Kayıt Ol
+            </a>
+
+        </div>
+
+
+        <a
+            href="/index.html"
+            class="back"
+        >
+            ← Ana sayfaya dön
+        </a>
+
+    </div>
+
+</body>
+
+</html>

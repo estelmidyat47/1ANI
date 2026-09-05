@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 ANI - Admin Paneli</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f1117;
+        color: #ffffff;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #171a23;
+        border-bottom: 1px solid #292d38;
+        padding: 18px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .logo span {
+        color: #8b5cf6;
+    }
+
+    .admin-badge {
+        background: #8b5cf6;
+        padding: 8px 13px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .container {
+        width: min(1400px, 94%);
+        margin: 30px auto;
+    }
+
+    .top-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        color: #9ca3af;
+        margin-top: 7px;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+        border-radius: 9px;
+        padding: 10px 15px;
+        font-weight: bold;
+    }
+
+    .refresh {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .refresh:hover {
+        background: #7c3aed;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: #171a23;
+        border: 1px solid #292d38;
+        border-radius: 15px;
+        padding: 22px;
+    }
+
+    .stat-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .stat-title {
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .stat-number {
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .tab {
+        background: #171a23;
+        color: #aaa;
+        border: 1px solid #292d38;
+        white-space: nowrap;
+    }
+
+    .tab.active {
+        background: #8b5cf6;
+        color: white;
+        border-color: #8b5cf6;
+    }
+
+    .panel {
+        background: #171a23;
+        border: 1px solid #292d38;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .panel-header {
+        padding: 18px;
+        border-bottom: 1px solid #292d38;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .panel-header h2 {
+        font-size: 20px;
+    }
+
+    .search {
+        background: #0f1117;
+        border: 1px solid #343945;
+        color: white;
+        border-radius: 9px;
+        padding: 11px 14px;
+        width: 280px;
+        outline: none;
+    }
+
+    .search:focus {
+        border-color: #8b5cf6;
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 750px;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #292d38;
+    }
+
+    th {
+        color: #9ca3af;
+        font-size: 13px;
+        background: #141720;
+    }
+
+    td {
+        font-size: 14px;
+    }
+
+    tr:hover td {
+        background: #1b1e28;
+    }
+
+    .username {
+        font-weight: bold;
+    }
+
+    .admin-label {
+        color: #a78bfa;
+        font-size: 12px;
+        margin-left: 5px;
+    }
+
+    .danger {
+        background: #dc2626;
+        color: white;
+    }
+
+    .danger:hover {
+        background: #b91c1c;
+    }
+
+    .small-btn {
+        padding: 7px 11px;
+        font-size: 12px;
+    }
+
+    .memory-title {
+        font-weight: bold;
+        color: #c4b5fd;
+    }
+
+    .memory-content {
+        color: #cbd5e1;
+        max-width: 400px;
+        line-height: 1.5;
+    }
+
+    .comment-content {
+        max-width: 400px;
+        line-height: 1.5;
+        color: #d1d5db;
+    }
+
+    .date {
+        color: #9ca3af;
+        white-space: nowrap;
+    }
+
+    .empty {
+        padding: 50px 20px;
+        text-align: center;
+        color: #9ca3af;
+    }
+
+    .loading {
+        padding: 40px;
+        text-align: center;
+        color: #9ca3af;
+    }
+
+    .toast {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #22c55e;
+        color: white;
+        padding: 14px 18px;
+        border-radius: 10px;
+        display: none;
+        z-index: 999;
+        box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    .toast.error {
+        background: #dc2626;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    @media (max-width: 900px) {
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        header {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 25px;
+        }
+
+        .container {
+            width: 94%;
+            margin: 20px auto;
+        }
+
+        .stats {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-card {
+            padding: 16px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+        }
+
+        .search {
+            width: 100%;
+        }
+
+        .panel-header {
+            align-items: stretch;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <span>1</span> ANI
+    </div>
+
+```
+<div class="admin-badge">
+    👑 Admin
+</div>
+```
+
+</header>
+
+<div class="container">
+
+```
+<div class="top-area">
+    <div>
+        <h1>👑 Admin Paneli</h1>
+        <p class="subtitle">
+            1 ANI platformunu buradan yönetebilirsin.
+        </p>
+    </div>
+
+    <button class="refresh" onclick="loadAll()">
+        🔄 Yenile
+    </button>
+</div>
+
+<!-- İSTATİSTİKLER -->
+
+<div class="stats">
+
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-title">Toplam Kullanıcı</div>
+        <div class="stat-number" id="usersCount">-</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-title">Toplam Anı</div>
+        <div class="stat-number" id="memoriesCount">-</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">❤️</div>
+        <div class="stat-title">Toplam Beğeni</div>
+        <div class="stat-number" id="likesCount">-</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-title">Toplam Yorum</div>
+        <div class="stat-number" id="commentsCount">-</div>
+    </div>
+
+</div>
+
+<!-- SEKME BUTONLARI -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        id="usersTab"
+        onclick="showSection('users')">
+        👥 Kullanıcılar
+    </button>
+
+    <button
+        class="tab"
+        id="memoriesTab"
+        onclick="showSection('memories')">
+        📝 Anılar
+    </button>
+
+    <button
+        class="tab"
+        id="commentsTab"
+        onclick="showSection('comments')">
+        💬 Yorumlar
+    </button>
+
+</div>
+
+<!-- KULLANICILAR -->
+
+<div id="usersSection" class="panel">
+
+    <div class="panel-header">
+
+        <h2>👥 Kullanıcı Yönetimi</h2>
+
+        <input
+            class="search"
+            id="userSearch"
+            type="text"
+            placeholder="Kullanıcı ara..."
+            oninput="filterUsers()">
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Anı</th>
+                    <th>Beğeni</th>
+                    <th>Yorum</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+
+            <tbody id="usersTable">
+                <tr>
+                    <td colspan="7">
+                        <div class="loading">
+                            Kullanıcılar yükleniyor...
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ANILAR -->
+
+<div id="memoriesSection" class="panel hidden">
+
+    <div class="panel-header">
+
+        <h2>📝 Anı Yönetimi</h2>
+
+        <input
+            class="search"
+            id="memorySearch"
+            type="text"
+            placeholder="Anı veya kullanıcı ara..."
+            oninput="filterMemories()">
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı</th>
+                    <th>Başlık</th>
+                    <th>Anı</th>
+                    <th>❤️</th>
+                    <th>💬</th>
+                    <th>Tarih</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+
+            <tbody id="memoriesTable">
+                <tr>
+                    <td colspan="8">
+                        <div class="loading">
+                            Anılar yükleniyor...
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- YORUMLAR -->
+
+<div id="commentsSection" class="panel hidden">
+
+    <div class="panel-header">
+
+        <h2>💬 Yorum Yönetimi</h2>
+
+        <input
+            class="search"
+            id="commentSearch"
+            type="text"
+            placeholder="Yorum veya kullanıcı ara..."
+            oninput="filterComments()">
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı</th>
+                    <th>Anı</th>
+                    <th>Yorum</th>
+                    <th>Tarih</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+
+            <tbody id="commentsTable">
+                <tr>
+                    <td colspan="6">
+                        <div class="loading">
+                            Yorumlar yükleniyor...
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+let users = [];
+let memories = [];
+let comments = [];
+
+
+// ========================================
+// TOAST
+// ========================================
+
+function showToast(message, error = false) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.toggle("error", error);
+
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 2500);
+}
+
+
+// ========================================
+// TARİH
+// ========================================
+
+function formatDate(date) {
+
+    if (!date) {
+        return "-";
+    }
+
+    const d = new Date(date.replace(" ", "T") + "Z");
+
+    if (isNaN(d.getTime())) {
+        return date;
+    }
+
+    return d.toLocaleString("tr-TR");
+}
+
+
+// ========================================
+// HTML GÜVENLİĞİ
+// ========================================
+
+function escapeHTML(text) {
+
+    if (text === null || text === undefined) {
+        return "";
+    }
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+// ========================================
+// ADMIN KONTROLÜ
+// ========================================
+
+async function checkAdmin() {
+
+    try {
+
+        const response = await fetch("/api/me");
+
+        if (!response.ok) {
+            location.href = "/login.html";
+            return false;
+        }
+
+        const user = await response.json();
+
+        if (!user.isFounder) {
+            alert("Bu sayfaya sadece Admin erişebilir.");
+            location.href = "/home.html";
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        alert("Sunucuya bağlanılamadı.");
+        return false;
+
+    }
+}
+
+
+// ========================================
+// İSTATİSTİKLER
+// ========================================
+
+async function loadStats() {
+
+    const response = await fetch(
+        "/api/founder/stats"
+    );
+
+    if (!response.ok) {
+        throw new Error("İstatistikler alınamadı.");
+    }
+
+    const data = await response.json();
+
+    document.getElementById("usersCount")
+        .textContent = data.users;
+
+    document.getElementById("memoriesCount")
+        .textContent = data.memories;
+
+    document.getElementById("likesCount")
+        .textContent = data.likes;
+
+    document.getElementById("commentsCount")
+        .textContent = data.comments;
+}
+
+
+// ========================================
+// KULLANICILAR
+// ========================================
+
+async function loadUsers() {
+
+    const response = await fetch(
+        "/api/founder/users"
+    );
+
+    if (!response.ok) {
+        throw new Error("Kullanıcılar alınamadı.");
+    }
+
+    users = await response.json();
+
+    renderUsers(users);
+}
+
+
+function renderUsers(list) {
+
+    const table =
+        document.getElementById("usersTable");
+
+    if (!list.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    <div class="empty">
+                        👥 Kullanıcı bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML = list.map(user => {
+
+        const isAdmin =
+            user.username === "kurucu475001207";
+
+        return `
+            <tr>
+
+                <td>${user.id}</td>
+
+                <td>
+                    <span class="username">
+                        ${escapeHTML(user.username)}
+                    </span>
+
+                    ${
+                        isAdmin
+                        ? `<span class="admin-label">👑 ADMIN</span>`
+                        : ""
+                    }
+                </td>
+
+                <td class="date">
+                    ${formatDate(user.created_at)}
+                </td>
+
+                <td>${user.memory_count}</td>
+
+                <td>${user.like_count}</td>
+
+                <td>${user.comment_count}</td>
+
+                <td>
+
+                    ${
+                        isAdmin
+                        ?
+                        `<button
+                            class="small-btn"
+                            disabled
+                            title="Admin silinemez">
+                            🛡️ Korumalı
+                        </button>`
+                        :
+                        `<button
+                            class="danger small-btn"
+                            onclick="deleteUser(${user.id}, '${escapeHTML(user.username)}')">
+                            🗑️ Sil
+                        </button>`
+                    }
+
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+// ========================================
+// KULLANICI ARAMA
+// ========================================
+
+function filterUsers() {
+
+    const search =
+        document.getElementById("userSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered = users.filter(user =>
+        user.username
+            .toLowerCase()
+            .includes(search)
+    );
+
+    renderUsers(filtered);
+}
+
+
+// ========================================
+// KULLANICI SİL
+// ========================================
+
+async function deleteUser(id, username) {
+
+    const confirmed = confirm(
+        `"${username}" kullanıcısını silmek istediğine emin misin?\n\nBu kullanıcının anıları, beğenileri ve yorumları da silinecek.`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/founder/users/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Kullanıcı silinemedi."
+            );
+        }
+
+        showToast("✅ Kullanıcı silindi.");
+
+        await loadAll();
+
+    } catch (error) {
+
+        showToast(
+            "❌ " + error.message,
+            true
+        );
+    }
+}
+
+
+// ========================================
+// ANILAR
+// ========================================
+
+async function loadMemories() {
+
+    const response = await fetch(
+        "/api/founder/memories"
+    );
+
+    if (!response.ok) {
+        throw new Error("Anılar alınamadı.");
+    }
+
+    memories = await response.json();
+
+    renderMemories(memories);
+}
+
+
+function renderMemories(list) {
+
+    const table =
+        document.getElementById("memoriesTable");
+
+    if (!list.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    <div class="empty">
+                        📝 Anı bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML = list.map(memory => {
+
+        let content =
+            escapeHTML(memory.content);
+
+        if (content.length > 180) {
+            content =
+                content.substring(0, 180) + "...";
+        }
+
+        return `
+            <tr>
+
+                <td>${memory.id}</td>
+
+                <td class="username">
+                    ${escapeHTML(memory.username)}
+                </td>
+
+                <td class="memory-title">
+                    ${escapeHTML(memory.title)}
+                </td>
+
+                <td class="memory-content">
+                    ${content}
+                </td>
+
+                <td>❤️ ${memory.like_count}</td>
+
+                <td>💬 ${memory.comment_count}</td>
+
+                <td class="date">
+                    ${formatDate(memory.created_at)}
+                </td>
+
+                <td>
+                    <button
+                        class="danger small-btn"
+                        onclick="deleteMemory(${memory.id})">
+                        🗑️ Sil
+                    </button>
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+// ========================================
+// ANI ARAMA
+// ========================================
+
+function filterMemories() {
+
+    const search =
+        document.getElementById("memorySearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered = memories.filter(memory =>
+
+        memory.title
+            .toLowerCase()
+            .includes(search)
+
+        ||
+
+        memory.content
+            .toLowerCase()
+            .includes(search)
+
+        ||
+
+        memory.username
+            .toLowerCase()
+            .includes(search)
+
+    );
+
+    renderMemories(filtered);
+}
+
+
+// ========================================
+// ANI SİL
+// ========================================
+
+async function deleteMemory(id) {
+
+    const confirmed = confirm(
+        "Bu anıyı silmek istediğine emin misin?\n\nAnıya ait beğeni ve yorumlar da silinecek."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/founder/memories/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Anı silinemedi."
+            );
+        }
+
+        showToast("✅ Anı silindi.");
+
+        await loadAll();
+
+    } catch (error) {
+
+        showToast(
+            "❌ " + error.message,
+            true
+        );
+    }
+}
+
+
+// ========================================
+// YORUMLAR
+// ========================================
+
+async function loadComments() {
+
+    const response = await fetch(
+        "/api/founder/comments"
+    );
+
+    if (!response.ok) {
+        throw new Error("Yorumlar alınamadı.");
+    }
+
+    comments = await response.json();
+
+    renderComments(comments);
+}
+
+
+function renderComments(list) {
+
+    const table =
+        document.getElementById("commentsTable");
+
+    if (!list.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="empty">
+                        💬 Yorum bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML = list.map(comment => {
+
+        let content =
+            escapeHTML(comment.content);
+
+        if (content.length > 220) {
+            content =
+                content.substring(0, 220) + "...";
+        }
+
+        return `
+            <tr>
+
+                <td>${comment.id}</td>
+
+                <td class="username">
+                    ${escapeHTML(comment.username)}
+                </td>
+
+                <td class="memory-title">
+                    ${escapeHTML(comment.memory_title)}
+                </td>
+
+                <td class="comment-content">
+                    ${content}
+                </td>
+
+                <td class="date">
+                    ${formatDate(comment.created_at)}
+                </td>
+
+                <td>
+                    <button
+                        class="danger small-btn"
+                        onclick="deleteComment(${comment.id})">
+                        🗑️ Sil
+                    </button>
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+// ========================================
+// YORUM ARAMA
+// ========================================
+
+function filterComments() {
+
+    const search =
+        document.getElementById("commentSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered = comments.filter(comment =>
+
+        comment.content
+            .toLowerCase()
+            .includes(search)
+
+        ||
+
+        comment.username
+            .toLowerCase()
+            .includes(search)
+
+        ||
+
+        comment.memory_title
+            .toLowerCase()
+            .includes(search)
+
+    );
+
+    renderComments(filtered);
+}
+
+
+// ========================================
+// YORUM SİL
+// ========================================
+
+async function deleteComment(id) {
+
+    const confirmed = confirm(
+        "Bu yorumu silmek istediğine emin misin?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/founder/comments/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Yorum silinemedi."
+            );
+        }
+
+        showToast("✅ Yorum silindi.");
+
+        await loadAll();
+
+    } catch (error) {
+
+        showToast(
+            "❌ " + error.message,
+            true
+        );
+    }
+}
+
+
+// ========================================
+// SEKME DEĞİŞTİR
+// ========================================
+
+function showSection(section) {
+
+    document
+        .getElementById("usersSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("memoriesSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("commentsSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("usersTab")
+        .classList.remove("active");
+
+    document
+        .getElementById("memoriesTab")
+        .classList.remove("active");
+
+    document
+        .getElementById("commentsTab")
+        .classList.remove("active");
+
+
+    if (section === "users") {
+
+        document
+            .getElementById("usersSection")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("usersTab")
+            .classList.add("active");
+
+    }
+
+    if (section === "memories") {
+
+        document
+            .getElementById("memoriesSection")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("memoriesTab")
+            .classList.add("active");
+
+    }
+
+    if (section === "comments") {
+
+        document
+            .getElementById("commentsSection")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("commentsTab")
+            .classList.add("active");
+
+    }
+}
+
+
+// ========================================
+// HER ŞEYİ YÜKLE
+// ========================================
+
+async function loadAll() {
+
+    try {
+
+        await Promise.all([
+            loadStats(),
+            loadUsers(),
+            loadMemories(),
+            loadComments()
+        ]);
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast(
+            "❌ Veriler yüklenirken hata oluştu.",
+            true
+        );
+    }
+}
+
+
+// ========================================
+// BAŞLAT
+// ========================================
+
+(async function() {
+
+    const admin = await checkAdmin();
+
+    if (!admin) {
+        return;
+    }
+
+    await loadAll();
+
+})();
+
+</script>
+
+</body>
+</html>

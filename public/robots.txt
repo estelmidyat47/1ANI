@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://1ani-production.up.railway.app/sitemap.xml

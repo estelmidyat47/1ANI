@@ -1,4 +1,4 @@
-```json
+
 {
   "name": "1ani",
   "version": "1.0.0",
@@ -17,4 +17,4 @@
     "express-session": "^1.19.0"
   }
 }
-```
+
